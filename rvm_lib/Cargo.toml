@@ -1,14 +1,14 @@
 [package]
 name = "rvm-lib"
 description = "Educational Virtual Machine written in Rust."
-version = "0.0.0"
+version = "0.0.1"
 license = "Unlicense"
 authors = ["Christian Mayer <christian@fox21.at>"]
 homepage = "https://github.com/TheFox/rvm"
 documentation = "https://github.com/TheFox/rvm"
 repository = "https://github.com/TheFox/rvm"
-keywords = ["virtual machine", "virtual", "machine"]
-categories = ["cli", "education", "publicdomain", "unlicensed"]
+keywords = ["vm", "virtual", "machine", "emulator", "education"]
+categories = ["command-line-utilities", "emulators", "parsing"]
 edition = "2018"
 
 [dependencies]
