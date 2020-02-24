@@ -1,8 +1,8 @@
 [package]
 name = "rvm"
 description = "Educational Virtual Machine written in Rust."
-version = "0.0.0-dev.1"
-license = "MIT"
+version = "0.0.0-dev.2"
+license = "Unlicense"
 authors = ["Christian Mayer <christian@fox21.at>"]
 homepage = "https://github.com/TheFox/rvm"
 documentation = "https://github.com/TheFox/rvm"

@@ -21,5 +21,5 @@ set -x
 pushd rvm_lib/ &> /dev/null
 cargo test ${TEST_OPTS} --lib $*
 
-# popd &> /dev/null
-# cargo test ${TEST_OPTS}
+popd &> /dev/null
+cargo test ${TEST_OPTS}

@@ -1,6 +1,8 @@
 
 extern crate clap;
-use clap::{App, Arg, ArgMatches};
+use clap::App;
+// use clap::Arg;
+// use clap::ArgMatches;
 use std::env::args;
 
 // const APP_NAME: &'static str = env!("CARGO_PKG_NAME");
@@ -33,10 +35,6 @@ fn main() {
         .subcommand(vars_subcmd)
         .subcommand(compile_subcmd);
 
-    // Command Options
-    let mut cmd_options = CommandOptions::new();
-    let mut cmd_kind = CommandKind::None;
-
     // Get Argument matches.
     let matches = app.get_matches();
     // println!("-> matches '{:?}'", matches);
@@ -49,7 +47,7 @@ fn main() {
 
             return;
         },
-        ("compile", Some(compile_matches)) => {
+        ("compile", Some(_compile_matches)) => {
             println!("-> cmd: compile");
         },
         _ => {
