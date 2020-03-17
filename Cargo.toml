@@ -13,7 +13,7 @@ edition = "2018"
 default-run = "rvm"
 
 [dependencies]
-rvm-lib = { path = "rvm_lib", version = "^0.1" }
+rvm-lib = { path = "rvm_lib", version = "0.1.0-dev" }
 clap = "^2.33.0"
 
 [workspace]
