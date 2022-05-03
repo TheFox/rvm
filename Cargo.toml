@@ -12,13 +12,18 @@ categories = ["command-line-utilities", "emulators", "parsing"]
 edition = "2018"
 default-run = "rvm"
 
+[build-dependencies]
+chrono = "0.4"
+
 [dependencies]
-rvm-lib = { path = "rvm_lib", version = "0.1.0-dev" }
-clap = "^2.33.0"
+
+[dependencies.rvm_lib]
+path = "lib"
+version = "0.1.0-dev"
 
 [workspace]
 members = [
-    "rvm_lib",
+    "lib",
 ]
 
 [profile.release]

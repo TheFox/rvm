@@ -16,7 +16,7 @@ mod tests_rvm {
     use super::Rvm;
 
     #[test]
-    fn test_rvm1() {
+    fn test_rvm_new() {
         Rvm::new();
     }
 }

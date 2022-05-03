@@ -1,59 +1,83 @@
 
-extern crate clap;
-use clap::App;
-// use clap::Arg;
-// use clap::ArgMatches;
-use std::env::args;
+include!(concat!(env!("OUT_DIR"), "/config.rs"));
 
-// const APP_NAME: &'static str = env!("CARGO_PKG_NAME");
-const APP_NAME: &'static str = "rvm";
-const APP_VERSION: &'static str = env!("CARGO_PKG_VERSION");
-const APP_AUTHORS: &'static str = env!("CARGO_PKG_AUTHORS");
-const APP_HOMEPAGE: &'static str = env!("CARGO_PKG_HOMEPAGE");
+use std::env::args;
+use std::io::Result;
+
+mod app;
+use crate::app::App;
+
+#[allow(dead_code)]
+fn print_app_info() {
+    println!("{} v{} ({})", APP_NAME, APP_VERSION, APP_BUILD_AT);
+    println!("{}", APP_AUTHORS);
+    println!("{}", APP_HOMEPAGE);
+    println!();
+}
+
+fn print_usage() {
+    println!("Usage:\n  rvm [<OPTIONS...>]");
+    println!();
+    println!("Options:");
+    println!("  -h|--help                       Show help.");
+    println!("  -V|--version                    Show version.");
+    println!();
+}
 
 /// Main
-fn main() {
+fn main() -> Result<()> {
+    #[cfg(debug_assertions)]
     println!("-> start");
 
     let args: Vec<String> = args().collect();
-    println!("-> args: '{:?}'", args);
+    let argc = args.len();
 
-    // Vars Sub Command
-    let vars_subcmd = App::new("vars")
-        .about("Print variables.");
+    if cfg!(debug_assertions) {
+        println!("-> args: {:?}", args);
+        println!("-> argc: {:?}", argc);
+    }
 
-    // Compile Sub Command
-    let compile_subcmd = App::new("compile")
-        .about("Compile");
+    if argc == 1 {
+        print_app_info();
+        print_usage();
+        return Ok(());
+    }
 
-    // Main App
-    let app = App::new(APP_NAME)
-        .version(APP_VERSION)
-        .author(APP_AUTHORS)
-        .about(APP_HOMEPAGE)
-        .usage("rvm [OPTIONS] [SUBCOMMAND] [SUBCOMMAND_OPTIONS]")
-        .subcommand(vars_subcmd)
-        .subcommand(compile_subcmd);
+    let mut app = App::new();
+    let mut skip_next = false;
+    for index in 1..argc {
+        if skip_next {
+            skip_next = false;
+            continue;
+        }
+        let arg = &args[index];
+        let next = &args.get(index + 1);
 
-    // Get Argument matches.
-    let matches = app.get_matches();
-    // println!("-> matches '{:?}'", matches);
+        #[cfg(debug_assertions)]
+        println!("-> arg: #{} {:?}", index, arg);
 
-    match matches.subcommand() {
-        ("vars", _) => {
-            println!("-> cmd: vars");
-            println!("APP_NAME '{}'", APP_NAME);
-            println!("APP_VERSION '{}'", APP_VERSION);
+        match arg.as_str() {
+            "-h" | "--help" => {
+                print_app_info();
+                print_usage();
+                return Ok(());
+            },
+            "-V" | "--version" => {
+                print_app_info();
+                print_usage();
+                return Ok(());
+            },
+            _ => {
+                panic!("Unrecognized argument: {}", arg);
+            },
+        }
+    }
 
-            return;
-        },
-        ("compile", Some(_compile_matches)) => {
-            println!("-> cmd: compile");
-        },
-        _ => {
-            println!("No command.");
-        },
+    if cfg!(debug_assertions) {
+        // println!("-> app.input_file_path: {:?}", app.input_file_path);
     }
 
     println!("-> end");
+
+    Ok(())
 }
